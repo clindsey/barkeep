@@ -103,7 +103,7 @@ module.exports = function(grunt) {
            if (err) {
                grunt.fatal(err);
            }
-           if (grunt.utils._.isUndefined(remotes)) {
+           if (!grunt.utils._.isArray(remotes)) {
                remotes = [];
            }
            grunt.verbose.writeln('fetched metadata for ' + remotes.length + ' objects.');
