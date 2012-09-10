@@ -112,7 +112,13 @@ module.exports = function(grunt) {
                return f.replace(grunt.config('deploy.srcDir'), '');
            });
            var remoteFiles = remotes.map(function(f) {
-               return f.Key.replace(grunt.config('deploy.bucketDir'), '');
+               if (grunt.utils._.isArray(f.Key)) {
+                  return f.Key[0].replace(grunt.config('deploy.bucketDir'), '');
+               } else if (grunt.utils._.isString(f.Key)) {
+                  return f.Key.replace(grunt.config('deploy.bucketDir'), '');
+               } else {
+                  return '';
+               }
            });
 
            var add = grunt.utils._.difference(localFiles, remoteFiles);
