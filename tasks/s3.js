@@ -140,12 +140,14 @@ module.exports = function(grunt) {
                        // The file is unchanged if there are any buckets with
                        // the same key and MD5 hash.
                        var unchangedFile = grunt.utils._.any(remotes, function (bucket) {
-                           var eTag = bucket.ETag.replace(/"/g, '');
-                           var key = bucket.Key.replace(grunt.config('deploy.bucketDir'), '');
+                           var bucketTag = grunt.utils._.isArray(bucket.ETag) ? bucket.ETag[0] : bucket.ETag;
+                           var bucketKey = grunt.utils._.isArray(bucket.Key) ? bucket.Key[0] : bucket.Key;
+                           var eTag = bucketTag.replace(/"/g, '');
+                           var key = bucketKey.replace(grunt.config('deploy.bucketDir'), '');
                            var mimeBucket = mime.lookup(key), localMime = mime.lookup(localFile);
                            return key === file && eTag === localHash && mimeBucket === localMime;
                        });
-                       return callback(unchangedFile === false);                      
+                       return callback(unchangedFile === false);
                    });          
                });    
            }, function (updateFiles) {
