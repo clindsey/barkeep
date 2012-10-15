@@ -35,6 +35,8 @@ grunt.initConfig({
 ### snockets
 *Build a dependency tree of source files for the `concat` and `min` grunt tasks using [snockets](https://github.com/TrevorBurnham/snockets). Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a [multi task][0].*
 
+barkeep currently doesn't support snockets concatenation of `*.coffee` files.
+
 __Example__:
 ```javascript
 grunt.initConfig({
