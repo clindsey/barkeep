@@ -6,16 +6,16 @@
  * Licensed under the MIT license.
  */
  
-module.exports = function(grunt) {    
+module.exports = function(grunt) {
     var Snockets = require('snockets');
     var path = require('path');
     
     grunt.registerHelper('output-filename', function(filename, config) {
         var extension = path.extname(filename);
-        var newFilename = filename.replace(extension, '.' + config.destExtension); 
+        var newFilename = filename.replace(extension, '.' + config.destExtension);
         // Place in a different directory.
         if (config.destDir) {
-            return config.preservePath ? path.join(config.destDir, newFilename) : 
+            return config.preservePath ? path.join(config.destDir, newFilename) :
                 path.join(config.destDir, path.basename(newFilename));
         }
         return newFilename;
@@ -44,10 +44,10 @@ module.exports = function(grunt) {
         // Get options
         var options = task.data.options, 
             config = {concat: {}, min: {}};
-        var enableMinification = options.min.enabled !== false;
+        var enableMinification = options.min && options.min.enabled !== false;
         
         // Use snockets to get the dependency chain files.
-        var js = grunt.file.expandFiles(task.file.src);        
+        var js = grunt.file.expandFiles(task.file.src);
         grunt.utils.async.forEach(js, function (fn, callback) {
             snock.getCompiledChain(fn, function (err, jsList) {
                 if (err) {
