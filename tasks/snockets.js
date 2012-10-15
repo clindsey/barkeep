@@ -49,7 +49,10 @@ module.exports = function(grunt) {
         // Use snockets to get the dependency chain files.
         var js = grunt.file.expandFiles(task.file.src);        
         grunt.utils.async.forEach(js, function (fn, callback) {
-            snock.getCompiledChain(fn, function (fileName, jsList) {
+            snock.getCompiledChain(fn, function (err, jsList) {
+                if (err) {
+                    grunt.fail.fatal(err);
+                }
                 if (!jsList) {
                     callback(null);
                 }
