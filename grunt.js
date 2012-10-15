@@ -22,6 +22,15 @@ module.exports = function(grunt) {
                  destExtension: "min.js"
               }
           }
+      },
+      coffee: {
+        src: ['test/fixtures/first.coffee'],
+        options: {
+            concat: {
+              destExtension: "debug.coffee",
+              destDir: 'target'
+            }
+        }
       }
     },
     clean: {
