@@ -1,7 +1,7 @@
 {
   "name": "grunt-barkeep",
   "description": "grunt tasks for deploying to s3, sending data to ducksboard, and snockets.",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "homepage": "https://github.com/flite/barkeep",
   "author": {
     "name": "Flite, Inc."

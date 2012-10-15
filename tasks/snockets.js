@@ -21,13 +21,15 @@ module.exports = function(grunt) {
         return newFilename;
     });
     
-    grunt.registerHelper('header-footer', function(sources, config) {
+    // Add header and footer.
+    grunt.registerHelper('header-footer', function(source, config) {
         if (config.header) {
-           sources.unshift(config.header);
+           source = config.header + source;
         }
         if (config.footer) {
-           sources.push(config.footer);
+           source = source + config.footer;
         }
+        return source;
     });
     
     // ## snockets task
@@ -42,35 +44,29 @@ module.exports = function(grunt) {
         }
         
         // Get options
-        var options = task.data.options, 
+        var options = task.data.options,
             config = {concat: {}, min: {}};
         var enableMinification = options.min && options.min.enabled !== false;
         
         // Use snockets to get the dependency chain files.
         var js = grunt.file.expandFiles(task.file.src);
         grunt.utils.async.forEach(js, function (fn, callback) {
-            snock.getCompiledChain(fn, function (err, jsList) {
+            snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
                     grunt.fail.fatal(err);
                 }
-                if (!jsList) {
-                    callback(null);
-                }
-                // Add to config.concat object.
-                config.concat[fn] = {
-                    src: grunt.utils._.pluck(jsList, 'filename'),
-                    dest: task.file.dest || grunt.helper('output-filename', fn, options.concat)
-                };
-                grunt.helper('header-footer', config.concat[fn].src, options.concat);
+                var combinedFile = task.file.dest || grunt.helper('output-filename', fn, options.concat);
+                var javascript  = grunt.helper('header-footer', js, options.concat);
                 
-                // Add to config.min object (if enabled)
+                grunt.file.write(combinedFile, javascript);
+
                 if (enableMinification) {
                     config.min[fn] = {
-                        src: config.concat[fn].dest,
+                        src: combinedFile,
                         dest: grunt.helper('output-filename', fn, options.min)
                     };
-                    grunt.helper('header-footer', config.min[fn].src, options.min);
                 }
+
                 callback(null);
             });
         }, function(err) {
