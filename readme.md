@@ -20,18 +20,6 @@ grunt.loadNpmTasks('grunt-barkeep');
 
 grunt-barkeep is bundled with the following additonal tasks:
 
-### docco
-*Generate docco documentation from JavaScript files. This is a [multi task][0]. It requires the `docco` binary to be installed on the system.*
-
-__Example__:
-```javascript
-grunt.initConfig({
-    docco: {
-      files: ['lib/**/*.js']
-    }
-});
-```
-
 ### snockets
 *Build a dependency tree of source files for the `concat` and `min` grunt tasks using [snockets](https://github.com/TrevorBurnham/snockets). Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a [multi task][0].*
 
