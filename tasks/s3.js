@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     
     // # helper gzip-md5
     // gets md5 of a file, after gzipping.
-    grunt.registerHelper('gzip-md5', function(src, cb) {
+    exports.gzipMd5 = function(src, cb) {
         var tmp = src + '.gz';
         var incr = 0;
         while (path.existsSync(tmp)) {
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                   return cb(null, crypto.createHash('md5').update(data).digest("hex"));
               });
           });
-    });
+    };
     
     // ## connectToS3
     // Establishes a connection to the Amazon S3 bucket.
@@ -133,7 +133,7 @@ module.exports = function(grunt) {
                    if (err) {
                        return done(err);
                    }
-                   grunt.helper('gzip-md5', localFile, function (err, localHash) {
+                   exports.gzipMd5(localFile, function (err, localHash) {
                        if (err) {
                            done(err);
                        }

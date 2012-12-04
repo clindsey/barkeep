@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     
     // ## helper filesize
     // Get the combined filesize (including gzipped) of a collection of files.
-    grunt.registerHelper('filesize', function (files, cb) {
+    exports.filesize = function (files, cb) {
         // Keep track of the total numbe of bytes.
         var totalSize = 0;
         // Store all of the text we read from each file.
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
             
             cb(null, totalSize, compressed.length);
         });
-    });
+    };
     
     // # multitask ducksboard
     // Send file size data of a collection of files to ducksboard
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         }
         
         var js = grunt.file.expandFiles(this.file.src);
-        grunt.helper('filesize', js, function(err, totalSize, compressedSize) {
+        exports.filesize(js, function(err, totalSize, compressedSize) {
             if (err) {
                 grunt.warn(err);
             }

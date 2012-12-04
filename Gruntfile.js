@@ -4,12 +4,6 @@ module.exports = function(grunt) {
     meta: {
       ducksboard_api_key: 'foo.bar'
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-    },
-    docco: {
-      files: ['tasks/*.js']
-    },
     snockets: {
       test: {
           src: ['test/fixtures/b.js'],
@@ -33,11 +27,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    clean: {
-        all: {
-            src: ['node_modules/glob']
-        }
-    },
     watch: {
       files: '<config:lint.files>',
       tasks: 'default'
@@ -51,6 +40,7 @@ module.exports = function(grunt) {
         src: ['tasks/*.js']
     },
     jshint: {
+      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -75,12 +65,13 @@ module.exports = function(grunt) {
     }
   });
   
-  // Load S3
-  grunt.loadNpmTasks('grunt-s3');
-  
+  // Load S3 -- currently does not work with grunt-0.4
+  // grunt.loadNpmTasks('grunt-s3');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+
   // Load local tasks.
   grunt.loadTasks('tasks');
   
   // Default task.
-  grunt.registerTask('default', 'lint');
+  grunt.registerTask('default', 'jshint');
 };

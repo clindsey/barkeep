@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     var Snockets = require('snockets');
     var path = require('path');
     
-    grunt.registerHelper('output-filename', function(filename, config) {
+    exports.outputFilename = function(filename, config) {
         var extension = path.extname(filename);
         var newFilename = filename.replace(extension, '.' + config.destExtension);
         // Place in a different directory.
@@ -19,10 +19,10 @@ module.exports = function(grunt) {
                 path.join(config.destDir, path.basename(newFilename));
         }
         return newFilename;
-    });
+    };
     
     // Add header and footer.
-    grunt.registerHelper('header-footer', function(source, config) {
+    exports.headerFooter = function(source, config) {
         if (config.header) {
            source = config.header + source;
         }
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
            source = source + config.footer;
         }
         return source;
-    });
+    };
     
     // ## snockets task
     // Generate a dependency tree using snockets for the concat and min tasks.
@@ -56,14 +56,14 @@ module.exports = function(grunt) {
                     grunt.fail.fatal(err);
                 }
                 var combinedFile = task.file.dest || grunt.helper('output-filename', fn, options.concat);
-                var javascript  = grunt.helper('header-footer', js, options.concat);
+                var javascript  = exports.headerFooter(js, options.concat);
                 
                 grunt.file.write(combinedFile, javascript);
 
                 if (enableMinification) {
                     config.min[fn] = {
                         src: combinedFile,
-                        dest: grunt.helper('output-filename', fn, options.min)
+                        dest: exports.outputFilename(fn, options.min)
                     };
                 }
 
