@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
  
-module.exports = function(grunt) {   
+module.exports = function(grunt) {
     var zlib = require('zlib');
     var crypto = require('crypto');
     var mime = require('mime');
@@ -40,8 +40,8 @@ module.exports = function(grunt) {
     // ## connectToS3
     // Establishes a connection to the Amazon S3 bucket.
     var connectToS3 = function (options) {
-        options = options || {};  
-        var accessKeyId = options.accessKeyId || process.env.AWS_ACCESS_KEY_ID, 
+        options = options || {};
+        var accessKeyId = options.accessKeyId || process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey = options.secretAccessKey || process.env.AWS_SECRET_ACCESS_KEY,
             awssum = require('awssum'),
             amazon = awssum.load('amazon/amazon'),
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         if (!accessKeyId || !secretAccessKey) {
             throw "Error: Must specify the env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY";
         }
-        return new S3Service(accessKeyId, secretAccessKey, "ops", amazon.US_EAST_1);    
+        return new S3Service(accessKeyId, secretAccessKey, "ops", amazon.US_EAST_1);
     };
 
     // ## createClient
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     };
     
     // ## getBucketObjects
-    // Gets a listing of objects in an S3 bucket, with an optional prefix. 
+    // Gets a listing of objects in an S3 bucket, with an optional prefix.
     var getBucketObjects = function (prefix, s3, callback) {
         if (!s3.client || !s3.bucket) {
             grunt.warn("Error: No client or bucket name defined.");
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             var bucketContents = data.Body.ListBucketResult.Contents;
 
             callback(null, bucketContents);
-        });    
+        });
     };
     
     // # task prepare-deploy
@@ -92,10 +92,10 @@ module.exports = function(grunt) {
        var key = grunt.config('deploy.aws_key'); //process.env.AWS_ACCESS_KEY_ID;
        var secret = grunt.config('deploy.aws_secret'); //process.env.AWS_SECRET_ACCESS_KEY;
        var bucket = grunt.config('deploy.aws_bucket'); //process.env.AWS_S3_BUCKET;
-       var s3Config = {};       
+       var s3Config = {};
    
        var s3Client = createClient({accessKeyId: key,
-               secretAccessKey: secret, 
+               secretAccessKey: secret,
                bucket: bucket});
        grunt.verbose.writeln('fetching amazon bucket metadata from: ' + grunt.config('deploy.bucketDir'));
        
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
            if (err) {
                grunt.fatal(err);
            }
-           if (!grunt.utils._.isArray(remotes)) {
+           if (!grunt.util._.isArray(remotes)) {
                remotes = [];
            }
            grunt.verbose.writeln('fetched metadata for ' + remotes.length + ' objects.');
@@ -112,21 +112,21 @@ module.exports = function(grunt) {
                return f.replace(grunt.config('deploy.srcDir'), '');
            });
            var remoteFiles = remotes.map(function(f) {
-               if (grunt.utils._.isArray(f.Key)) {
+               if (grunt.util._.isArray(f.Key)) {
                   return f.Key[0].replace(grunt.config('deploy.bucketDir'), '');
-               } else if (grunt.utils._.isString(f.Key)) {
+               } else if (grunt.util._.isString(f.Key)) {
                   return f.Key.replace(grunt.config('deploy.bucketDir'), '');
                } else {
                   return '';
                }
            });
 
-           var add = grunt.utils._.difference(localFiles, remoteFiles);
-           var del = grunt.utils._.difference(remoteFiles, localFiles);
-           var update = grunt.utils._.intersection(remoteFiles, localFiles);
+           var add = grunt.util._.difference(localFiles, remoteFiles);
+           var del = grunt.util._.difference(remoteFiles, localFiles);
+           var update = grunt.util._.intersection(remoteFiles, localFiles);
            
            // Determine which files have really changed by comparing md4 hashes.
-           grunt.utils.async.filter(update, function(file, callback) {
+           grunt.util.async.filter(update, function(file, callback) {
                var localFile = path.join(process.pwd, grunt.config('deploy.srcDir'), file);
 
                fs.readFile(localFile, null, function (err, data) {
@@ -139,17 +139,17 @@ module.exports = function(grunt) {
                        }
                        // The file is unchanged if there are any buckets with
                        // the same key and MD5 hash.
-                       var unchangedFile = grunt.utils._.any(remotes, function (bucket) {
-                           var bucketTag = grunt.utils._.isArray(bucket.ETag) ? bucket.ETag[0] : bucket.ETag;
-                           var bucketKey = grunt.utils._.isArray(bucket.Key) ? bucket.Key[0] : bucket.Key;
+                       var unchangedFile = grunt.util._.any(remotes, function (bucket) {
+                           var bucketTag = grunt.util._.isArray(bucket.ETag) ? bucket.ETag[0] : bucket.ETag;
+                           var bucketKey = grunt.util._.isArray(bucket.Key) ? bucket.Key[0] : bucket.Key;
                            var eTag = bucketTag.replace(/"/g, '');
                            var key = bucketKey.replace(grunt.config('deploy.bucketDir'), '');
                            var mimeBucket = mime.lookup(key), localMime = mime.lookup(localFile);
                            return key === file && eTag === localHash && mimeBucket === localMime;
                        });
                        return callback(unchangedFile === false);
-                   });          
-               });    
+                   });
+               });
            }, function (updateFiles) {
                // If there are no modifications, we're done.
                if (add.length === 0 && update.length === 0 && del.length === 0) {
@@ -170,9 +170,9 @@ module.exports = function(grunt) {
                });
                s3Config.copy = [];
                grunt.verbose.writeln(require('util').inspect(s3Config));
-               grunt.config.set('s3', s3Config);               
-               return done();            
-           });          
-       });      
+               grunt.config.set('s3', s3Config);
+               return done();
+           });
+       });
      });
  };

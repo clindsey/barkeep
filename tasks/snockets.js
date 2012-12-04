@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         
         // Use snockets to get the dependency chain files.
         var js = grunt.file.expandFiles(task.file.src);
-        grunt.utils.async.forEach(js, function (fn, callback) {
+        grunt.util.async.forEach(js, function (fn, callback) {
             snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
                     grunt.fail.fatal(err);
@@ -80,8 +80,8 @@ module.exports = function(grunt) {
             
             var existingConcat = grunt.config.get('concat') || {};
             var existingMin = grunt.config.get('min') || {};
-            grunt.utils._.extend(existingConcat, config.concat);
-            grunt.utils._.extend(existingMin, config.min);
+            grunt.util._.extend(existingConcat, config.concat);
+            grunt.util._.extend(existingMin, config.min);
             // Refresh concat and min config
             grunt.config.set('concat', existingConcat);
             grunt.config.set('min', existingMin);

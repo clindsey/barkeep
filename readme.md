@@ -2,7 +2,7 @@
 
 <img src="http://bit.ly/wAqCqY" alt="Barkeep" title="Barkeep" height="336" width="535"/>
 
-a simple collection of common javascript build tasks for grunt.
+a simple collection of common javascript build tasks for grunt 0.4.
 
 ## Getting Started
 Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-barkeep`
