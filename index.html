@@ -32,7 +32,7 @@
 
 <p><img src="http://bit.ly/wAqCqY" alt="Barkeep" title="Barkeep" height="336" width="535"></p>
 
-<p>a simple collection of common javascript build tasks for grunt.</p>
+<p>A collection of javascript build tasks for grunt, including a task for snockets (the Node.js version of Ruby's Sprockets).</p>
 
 <h2>Getting Started</h2>
 
@@ -40,11 +40,8 @@
 
 <p>Then add this line to your project's <code>grunt.js</code> gruntfile:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-barkeep'</span><span class="p">);</span>
-</pre>
-</div>
-
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-barkeep'</span><span class="p">);</span>
+</pre></div>
 
 <h2>Documentation</h2>
 
@@ -56,24 +53,22 @@
 
 <p><strong>Example</strong>:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
     <span class="nx">docco</span><span class="o">:</span> <span class="p">{</span>
       <span class="nx">files</span><span class="o">:</span> <span class="p">[</span><span class="s1">'lib/**/*.js'</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">});</span>
-</pre>
-</div>
-
+</pre></div>
 
 <h3>snockets</h3>
 
 <p><em>Build a dependency tree of source files for the <code>concat</code> and <code>min</code> grunt tasks using <a href="https://github.com/TrevorBurnham/snockets">snockets</a>. Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a <a href="https://github.com/cowboy/grunt/blob/master/docs/types_of_tasks.md#multi-tasks-%E2%9A%91" title="Grunt Multitasks">multi task</a>.</em></p>
 
+<p>barkeep, using snockets, can also concatenate coffeescript files.</p>
+
 <p><strong>Example</strong>:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
     <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span>
         <span class="nx">buildDirectory</span><span class="o">:</span> <span class="s1">'dist'</span><span class="p">,</span>
         <span class="nx">header</span><span class="o">:</span> <span class="s1">'/* Copyright 2012, Flite Inc. */'</span><span class="p">,</span>
@@ -97,9 +92,7 @@
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">});</span>
-</pre>
-</div>
-
+</pre></div>
 
 <h3>prepare-deploy</h3>
 
@@ -111,8 +104,7 @@
 
 <p><strong>Example</strong>:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
     <span class="nx">meta</span><span class="o">:</span> <span class="p">{</span>
         <span class="nx">ducksboard_api_key</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DUCKSBOARD_API_KEY</span>
     <span class="p">},</span>
@@ -128,9 +120,7 @@
         <span class="p">}</span>
     <span class="p">}</span>   
 <span class="p">});</span>
-</pre>
-</div>
-
+</pre></div>
 
 <h3>clean</h3>
 
@@ -138,15 +128,12 @@
 
 <p><strong>Example</strong>:</p>
 
-<div class="highlight">
-<pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
     <span class="nx">clean</span><span class="o">:</span> <span class="p">{</span>
       <span class="nx">files</span><span class="o">:</span> <span class="p">[</span><span class="s1">'build/**/*.js'</span><span class="p">]</span>
     <span class="p">}</span>
 <span class="p">});</span>
-</pre>
-</div>
-
+</pre></div>
 
 <h3>More Examples</h3>
 
