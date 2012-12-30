@@ -52,6 +52,9 @@ module.exports = function(grunt) {
         es5: true
       },
     },
+    nodeunit: {
+      files: ['test/s3.js']
+    },
     ducksboard: {
         tasks: {
             src: ['tasks/*.js'],
@@ -63,10 +66,12 @@ module.exports = function(grunt) {
   // Load grunt s3
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
   // Load local tasks.
   grunt.loadTasks('tasks');
   
   // Default task.
+  grunt.registerTask('test', ['nodeunit']);
   grunt.registerTask('default', 'jshint');
 };

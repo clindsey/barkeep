@@ -126,7 +126,7 @@ module.exports = function(grunt) {
            var del = grunt.util._.difference(remoteFiles, localFiles);
            var update = grunt.util._.intersection(remoteFiles, localFiles);
            
-           // Determine which files have really changed by comparing md4 hashes.
+           // Determine which files have really changed by comparing md5 hashes.
            grunt.util.async.filter(update, function(file, callback) {
                var localFile = path.join(process.pwd, grunt.config('deploy.srcDir'), file);
 
