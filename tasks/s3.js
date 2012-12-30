@@ -7,6 +7,7 @@
  */
  
 module.exports = function(grunt) {
+    "use strict";
     var zlib = require('zlib');
     var crypto = require('crypto');
     var mime = require('mime');

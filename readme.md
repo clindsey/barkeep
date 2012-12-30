@@ -2,10 +2,10 @@
 
 <img src="http://bit.ly/wAqCqY" alt="Barkeep" title="Barkeep" height="336" width="535"/>
 
-a simple collection of common javascript build tasks for grunt 0.4.
+grunt 0.4.x tasks for snockets, Amazon S3 uploads, and ducksboard updates.
 
 ## Getting Started
-If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide, as it explains how to create a [gruntfile][Getting Started] as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
+If you haven't used [grunt](https://github.com/gruntjs) before, be sure to check out the [Getting Started](https://github.com/gruntjs/grunt/wiki/Getting-started) guide, as it explains how to create a gruntfile as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
 
 ```sh
 npm install grunt-barkeep --save-dev
@@ -19,10 +19,13 @@ grunt.loadNpmTasks('grunt-barkeep');
 
 ## Documentation
 
-grunt-barkeep is bundled with the following additonal tasks:
+grunt-barkeep is bundled with the following tasks:
 
 ### snockets
 *Build a dependency tree of source files for the `concat` and `min` grunt tasks using [snockets](https://github.com/TrevorBurnham/snockets). Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a [multi task][0].*
+
+snockets will automatically concatenate files in the correct order, so you don't need to use grunt's
+`concat` task if you use the `snockets` task.
 
 barkeep, using snockets, can also concatenate coffeescript files.
 
@@ -93,13 +96,14 @@ grunt.initConfig({
 ```
 
 ### More Examples
-See grunt.js in the barkeep directory.
+See Gruntfile.js in the barkeep directory.
 
 ## Contributing
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
-_(Nothing yet)_
+
+0.4.0 - Version compatible with grunt-0.4.x.
 
 ## License
 Copyright (c) 2012 Flite, Inc.  

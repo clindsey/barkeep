@@ -1,4 +1,5 @@
 module.exports = function( grunt ) {
+    "use strict";
     // ## git-recent-changes helper
     // Return an array of the files changed in the last commit.
     exports.gitRecentChanges = function (callback) {
@@ -46,7 +47,7 @@ module.exports = function( grunt ) {
 
         exports[helperName](function(err, files) {
             if (err) {
-                git.log.error(err);
+                grunt.log.error(err);
                 return done(false);
             }
             grunt.util._.each(concat, function(value, key) {

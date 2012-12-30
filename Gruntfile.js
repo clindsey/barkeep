@@ -27,10 +27,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
-    },
     deploy: {
         aws_key: 'key',
         aws_secret: 'secret',
@@ -55,7 +51,6 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      globals: {}
     },
     ducksboard: {
         tasks: {
@@ -65,9 +60,9 @@ module.exports = function(grunt) {
     }
   });
   
-  // Load S3 -- currently does not work with grunt-0.4
-  // grunt.loadNpmTasks('grunt-s3');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+  // Load grunt s3
+  grunt.loadNpmTasks('grunt-s3');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Load local tasks.
   grunt.loadTasks('tasks');

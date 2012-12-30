@@ -7,6 +7,7 @@
  */
  
 module.exports = function(grunt) {
+    "use strict";
     var peking = require('peking');
     var fs = require('fs');
     var gzip = require('gzip-js');

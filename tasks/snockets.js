@@ -7,10 +7,11 @@
  */
  
 module.exports = function(grunt) {
+    "use strict";
     var Snockets = require('snockets');
     var path = require('path');
     
-    exports.outputFilename = function(filename, config) {
+    var outputFilename = exports.outputFilename = function(filename, config) {
         var extension = path.extname(filename);
         var newFilename = filename.replace(extension, '.' + config.destExtension);
         // Place in a different directory.
@@ -22,7 +23,7 @@ module.exports = function(grunt) {
     };
     
     // Add header and footer.
-    exports.headerFooter = function(source, config) {
+    var headerFooter = exports.headerFooter = function(source, config) {
         if (config.header) {
            source = config.header + source;
         }
@@ -55,7 +56,7 @@ module.exports = function(grunt) {
                 if (err) {
                     grunt.fail.fatal(err);
                 }
-                var combinedFile = task.file.dest || grunt.helper('output-filename', fn, options.concat);
+                var combinedFile = task.file.dest || outputFilename(fn, options.concat);
                 var javascript  = exports.headerFooter(js, options.concat);
                 
                 grunt.file.write(combinedFile, javascript);
@@ -73,8 +74,6 @@ module.exports = function(grunt) {
             if (err) {
                 return done(err);
             }
-            grunt.verbose.writeln('concat tree'.underline);
-            grunt.verbose.writeln(require('util').inspect(config.concat));
             grunt.verbose.writeln('min tree'.underline);
             grunt.verbose.writeln(require('util').inspect(config.min));
             
