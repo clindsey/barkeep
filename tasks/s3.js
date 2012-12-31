@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     exports.gzipMd5 = function(src, cb) {
         var tmp = src + '.gz';
         var incr = 0;
-        while (path.existsSync(tmp)) {
+        while (fs.existsSync(tmp)) {
           tmp = src + '.' + (incr++) + '.gz';
         }
 
