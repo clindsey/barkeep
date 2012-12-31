@@ -7,10 +7,11 @@
  */
  
 module.exports = function(grunt) {
+    "use strict";
     var Snockets = require('snockets');
     var path = require('path');
     
-    grunt.registerHelper('output-filename', function(filename, config) {
+    var outputFilename = exports.outputFilename = function(filename, config) {
         var extension = path.extname(filename);
         var newFilename = filename.replace(extension, '.' + config.destExtension);
         // Place in a different directory.
@@ -19,10 +20,10 @@ module.exports = function(grunt) {
                 path.join(config.destDir, path.basename(newFilename));
         }
         return newFilename;
-    });
+    };
     
     // Add header and footer.
-    grunt.registerHelper('header-footer', function(source, config) {
+    var headerFooter = exports.headerFooter = function(source, config) {
         if (config.header) {
            source = config.header + source;
         }
@@ -30,7 +31,7 @@ module.exports = function(grunt) {
            source = source + config.footer;
         }
         return source;
-    });
+    };
     
     // ## snockets task
     // Generate a dependency tree using snockets for the concat and min tasks.
@@ -50,20 +51,20 @@ module.exports = function(grunt) {
         
         // Use snockets to get the dependency chain files.
         var js = grunt.file.expandFiles(task.file.src);
-        grunt.utils.async.forEach(js, function (fn, callback) {
+        grunt.util.async.forEach(js, function (fn, callback) {
             snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
                     grunt.fail.fatal(err);
                 }
-                var combinedFile = task.file.dest || grunt.helper('output-filename', fn, options.concat);
-                var javascript  = grunt.helper('header-footer', js, options.concat);
+                var combinedFile = task.file.dest || outputFilename(fn, options.concat);
+                var javascript  = exports.headerFooter(js, options.concat);
                 
                 grunt.file.write(combinedFile, javascript);
 
                 if (enableMinification) {
                     config.min[fn] = {
                         src: combinedFile,
-                        dest: grunt.helper('output-filename', fn, options.min)
+                        dest: exports.outputFilename(fn, options.min)
                     };
                 }
 
@@ -73,15 +74,13 @@ module.exports = function(grunt) {
             if (err) {
                 return done(err);
             }
-            grunt.verbose.writeln('concat tree'.underline);
-            grunt.verbose.writeln(require('util').inspect(config.concat));
             grunt.verbose.writeln('min tree'.underline);
             grunt.verbose.writeln(require('util').inspect(config.min));
             
             var existingConcat = grunt.config.get('concat') || {};
             var existingMin = grunt.config.get('min') || {};
-            grunt.utils._.extend(existingConcat, config.concat);
-            grunt.utils._.extend(existingMin, config.min);
+            grunt.util._.extend(existingConcat, config.concat);
+            grunt.util._.extend(existingMin, config.min);
             // Refresh concat and min config
             grunt.config.set('concat', existingConcat);
             grunt.config.set('min', existingMin);

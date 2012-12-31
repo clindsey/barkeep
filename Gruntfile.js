@@ -4,12 +4,6 @@ module.exports = function(grunt) {
     meta: {
       ducksboard_api_key: 'foo.bar'
     },
-    lint: {
-      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js']
-    },
-    docco: {
-      files: ['tasks/*.js']
-    },
     snockets: {
       test: {
           src: ['test/fixtures/b.js'],
@@ -33,15 +27,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    clean: {
-        all: {
-            src: ['node_modules/glob']
-        }
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
-    },
     deploy: {
         aws_key: 'key',
         aws_secret: 'secret',
@@ -51,6 +36,7 @@ module.exports = function(grunt) {
         src: ['tasks/*.js']
     },
     jshint: {
+      files: ['grunt.js', 'tasks/**/*.js', 'test/**/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -65,7 +51,9 @@ module.exports = function(grunt) {
         node: true,
         es5: true
       },
-      globals: {}
+    },
+    nodeunit: {
+      files: ['test/s3.js']
     },
     ducksboard: {
         tasks: {
@@ -75,27 +63,15 @@ module.exports = function(grunt) {
     }
   });
   
-  // Load S3
+  // Load grunt s3
   grunt.loadNpmTasks('grunt-s3');
-  
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
   // Load local tasks.
   grunt.loadTasks('tasks');
   
-  // Simple task for testing helpers.
-  grunt.registerTask('test-helpers', 'Test helpers.', function () {
-      var done = this.async();
-      grunt.helper('commandExists', 'foo', function(exists) {
-        console.log('foo exists?', exists);
-        done();
-      });
-      /*grunt.helper('deleteDirectory', 'docs', function(err) {
-          if (err) {
-             grunt.warn(err);
-          }
-          done();
-      });*/ 
-  });
-  
   // Default task.
-  grunt.registerTask('default', 'lint');
+  grunt.registerTask('test', ['nodeunit']);
+  grunt.registerTask('default', 'jshint');
 };

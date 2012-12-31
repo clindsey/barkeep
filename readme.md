@@ -2,38 +2,30 @@
 
 <img src="http://bit.ly/wAqCqY" alt="Barkeep" title="Barkeep" height="336" width="535"/>
 
-A collection of javascript build tasks for grunt, including a task for snockets (the Node.js version of Ruby's Sprockets).
+grunt 0.4.x tasks for snockets, Amazon S3 uploads, and ducksboard updates.
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-barkeep`
+If you haven't used [grunt](https://github.com/gruntjs) before, be sure to check out the [Getting Started](https://github.com/gruntjs/grunt/wiki/Getting-started) guide, as it explains how to create a gruntfile as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:
 
-Then add this line to your project's `grunt.js` gruntfile:
+```sh
+npm install grunt-barkeep --save-dev
+```
+
+Then add this line to your project's `Gruntfile.js`:
 
 ```javascript
 grunt.loadNpmTasks('grunt-barkeep');
 ```
 
-[grunt]: https://github.com/cowboy/grunt
-[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
-
 ## Documentation
 
-grunt-barkeep is bundled with the following additonal tasks:
-
-### docco
-*Generate docco documentation from JavaScript files. This is a [multi task][0]. It requires the `docco` binary to be installed on the system.*
-
-__Example__:
-```javascript
-grunt.initConfig({
-    docco: {
-      files: ['lib/**/*.js']
-    }
-});
-```
+grunt-barkeep is bundled with the following tasks:
 
 ### snockets
 *Build a dependency tree of source files for the `concat` and `min` grunt tasks using [snockets](https://github.com/TrevorBurnham/snockets). Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a [multi task][0].*
+
+snockets will automatically concatenate files in the correct order, so you don't need to use grunt's
+`concat` task if you use the `snockets` task.
 
 barkeep, using snockets, can also concatenate coffeescript files.
 
@@ -104,13 +96,14 @@ grunt.initConfig({
 ```
 
 ### More Examples
-See grunt.js in the barkeep directory.
+See Gruntfile.js in the barkeep directory.
 
 ## Contributing
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
-_(Nothing yet)_
+
+0.4.0 - Version compatible with grunt-0.4.x.
 
 ## License
 Copyright (c) 2012 Flite, Inc.  

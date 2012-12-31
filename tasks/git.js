@@ -1,8 +1,9 @@
 module.exports = function( grunt ) {
+    "use strict";
     // ## git-recent-changes helper
-    // Return an array of the files changed in the last commit. 
-    grunt.registerHelper('git-recent-changes', function (callback) {
-        grunt.utils.spawn({
+    // Return an array of the files changed in the last commit.
+    exports.gitRecentChanges = function (callback) {
+        grunt.util.spawn({
             cmd: "git",
             args: [ "show", "--pretty=format:", "--name-only", "HEAD" ]
         }, function( err, result ) {
@@ -14,12 +15,12 @@ module.exports = function( grunt ) {
             changed = grunt.utils._.compact(result.split("\n"));
             return callback(null, changed);
         });
-    });
+    };
 
     // ## git-recent-changes helper
-    // Return an array of the files changed in the last commit. 
-    grunt.registerHelper('git-modified-files', function (callback) {
-        grunt.utils.spawn({
+    // Return an array of the files changed in the last commit.
+    exports.gitModifiedFiles = function (callback) {
+        grunt.util.spawn({
             cmd: "git",
             args: [ "ls-files", "--modified" ]
         }, function( err, result ) {
@@ -27,10 +28,10 @@ module.exports = function( grunt ) {
                 return callback(err, null);
             }
             var changed = {};
-            changed = grunt.utils._.compact(result.split("\n"));
+            changed = grunt.util._.compact(result.split("\n"));
             return callback(null, changed);
         });
-    });
+    };
 
     // # quick-concat
     // Remove concat targets (and any related min targets) for files that have
@@ -44,13 +45,13 @@ module.exports = function( grunt ) {
 
         var helperName = option === 'modified' ? 'git-modified-files' : 'git-recent-changes';
 
-        grunt.helper(helperName, function(err, files) {
+        exports[helperName](function(err, files) {
             if (err) {
-                git.log.error(err);
+                grunt.log.error(err);
                 return done(false);
             }
-            grunt.utils._.each(concat, function(value, key) {
-                if (files.indexOf(key) === -1 && grunt.utils._.intersection(files, concat[key].src).length === 0) {
+            grunt.util._.each(concat, function(value, key) {
+                if (files.indexOf(key) === -1 && grunt.util._.intersection(files, concat[key].src).length === 0) {
                     grunt.verbose.writeln('removing concat target: ' + key);
                     delete concat[key];
                     grunt.verbose.writeln('removing min target: ' + key);
