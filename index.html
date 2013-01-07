@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Barkeep by flite</title>
+    <title>barkeep by flite</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
@@ -15,8 +15,8 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Barkeep</h1>
-        <p>Flite's node.js JavaScript build toolkit.</p>
+        <h1>barkeep</h1>
+        <p>Flite's node.js JavaScript build toolkit (grunt-0.4.x compatible)</p>
 
         <p class="view"><a href="https://github.com/flite/barkeep">View the Project on GitHub <small>flite/barkeep</small></a></p>
 
@@ -32,37 +32,30 @@
 
 <p><img src="http://bit.ly/wAqCqY" alt="Barkeep" title="Barkeep" height="336" width="535"></p>
 
-<p>A collection of javascript build tasks for grunt, including a task for snockets (the Node.js version of Ruby's Sprockets).</p>
+<p>grunt 0.4.x tasks for snockets, Amazon S3 uploads, and ducksboard updates.</p>
 
 <h2>Getting Started</h2>
 
-<p>Install this grunt plugin next to your project's <a href="https://github.com/cowboy/grunt/blob/master/docs/getting_started.md">grunt.js gruntfile</a> with: <code>npm install grunt-barkeep</code></p>
+<p>If you haven't used <a href="https://github.com/gruntjs">grunt</a> before, be sure to check out the <a href="https://github.com/gruntjs/grunt/wiki/Getting-started">Getting Started</a> guide, as it explains how to create a gruntfile as well as install and use grunt plugins. Once you're familiar with that process, install this plugin with this command:</p>
 
-<p>Then add this line to your project's <code>grunt.js</code> gruntfile:</p>
+<div class="highlight"><pre>npm install grunt-barkeep --save-dev
+</pre></div>
+
+<p>Then add this line to your project's <code>Gruntfile.js</code>:</p>
 
 <div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">loadNpmTasks</span><span class="p">(</span><span class="s1">'grunt-barkeep'</span><span class="p">);</span>
 </pre></div>
 
 <h2>Documentation</h2>
 
-<p>grunt-barkeep is bundled with the following additonal tasks:</p>
-
-<h3>docco</h3>
-
-<p><em>Generate docco documentation from JavaScript files. This is a <a href="https://github.com/cowboy/grunt/blob/master/docs/types_of_tasks.md#multi-tasks-%E2%9A%91" title="Grunt Multitasks">multi task</a>. It requires the <code>docco</code> binary to be installed on the system.</em></p>
-
-<p><strong>Example</strong>:</p>
-
-<div class="highlight"><pre><span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-    <span class="nx">docco</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">files</span><span class="o">:</span> <span class="p">[</span><span class="s1">'lib/**/*.js'</span><span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">});</span>
-</pre></div>
+<p>grunt-barkeep is bundled with the following tasks:</p>
 
 <h3>snockets</h3>
 
 <p><em>Build a dependency tree of source files for the <code>concat</code> and <code>min</code> grunt tasks using <a href="https://github.com/TrevorBurnham/snockets">snockets</a>. Snockets is a JavaScript dependency parser similar to Ruby's sprockets. This is a <a href="https://github.com/cowboy/grunt/blob/master/docs/types_of_tasks.md#multi-tasks-%E2%9A%91" title="Grunt Multitasks">multi task</a>.</em></p>
+
+<p>snockets will automatically concatenate files in the correct order, so you don't need to use grunt's
+<code>concat</code> task if you use the <code>snockets</code> task.</p>
 
 <p>barkeep, using snockets, can also concatenate coffeescript files.</p>
 
@@ -137,15 +130,15 @@
 
 <h3>More Examples</h3>
 
-<p>See grunt.js in the barkeep directory.</p>
+<p>See Gruntfile.js in the barkeep directory.</p>
 
 <h2>Contributing</h2>
 
-<p>In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using <a href="https://github.com/cowboy/grunt">grunt</a>.</p>
+<p>In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].</p>
 
 <h2>Release History</h2>
 
-<p><em>(Nothing yet)</em></p>
+<p>0.4.0 - Version compatible with grunt-0.4.x.</p>
 
 <h2>License</h2>
 
