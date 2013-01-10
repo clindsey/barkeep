@@ -38,35 +38,25 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('snockets', 'Create snockets dependency tree for concat and min.', function() {
         var done = this.async(), task = this;
         var snock = new Snockets();
-        
+
+        // Get options
+        var options = task.options();
         // Make sure a configuration object exists if there is not destination.
-        if (!task.file.dest && !task.data.options) {
-            grunt.warn(task.nameArgs + ' requires an options object or a dest object.');
+        if (!options) {
+            grunt.warn('Requires an options object.');
         }
         
-        // Get options
-        var options = task.data.options,
-            config = {concat: {}, min: {}};
-        var enableMinification = options.min && options.min.enabled !== false;
-        
         // Use snockets to get the dependency chain files.
-        var js = grunt.file.expandFiles(task.fileSrc);
+        var js = task.filesSrc;
         grunt.util.async.forEach(js, function (fn, callback) {
             snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
                     grunt.fail.fatal(err);
                 }
-                var combinedFile = task.file.dest || outputFilename(fn, options.concat);
-                var javascript  = exports.headerFooter(js, options.concat);
+                var combinedFile = outputFilename(fn, options.concat);
+                var javascript  = headerFooter(js, options.concat);
                 
                 grunt.file.write(combinedFile, javascript);
-
-                if (enableMinification) {
-                    config.min[fn] = {
-                        src: combinedFile,
-                        dest: exports.outputFilename(fn, options.min)
-                    };
-                }
 
                 callback(null);
             });
@@ -74,17 +64,6 @@ module.exports = function(grunt) {
             if (err) {
                 return done(err);
             }
-            grunt.verbose.writeln('min tree'.underline);
-            grunt.verbose.writeln(require('util').inspect(config.min));
-            
-            var existingConcat = grunt.config.get('concat') || {};
-            var existingMin = grunt.config.get('min') || {};
-            grunt.util._.extend(existingConcat, config.concat);
-            grunt.util._.extend(existingMin, config.min);
-            // Refresh concat and min config
-            grunt.config.set('concat', existingConcat);
-            grunt.config.set('min', existingMin);
             done();
         });
-    });
-};
+    }
