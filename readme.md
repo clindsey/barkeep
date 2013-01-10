@@ -42,14 +42,14 @@ grunt.initConfig({
             src: ['public/javascript/main-rollup.js'],
             options: {
                 concat: {
-                        header: '<banner:meta.header>',
+                        header: '<%= meta.header %>',
                         destExtension: "debug.js",
-                        destDir: "<config:meta.buildDirectory>",
-                        footer: '<banner:meta.footer>'
+                        destDir: "<%= meta.buildDirectory %>",
+                        footer: '<%= meta.footer %>'
                 },
                 min: {
                         destExtension: "js",
-                        destDir: "<config:meta.buildDirectory>"
+                        destDir: "<%= meta.buildDirectory %>"
                 }
             }
         }
