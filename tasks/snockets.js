@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         var enableMinification = options.min && options.min.enabled !== false;
         
         // Use snockets to get the dependency chain files.
-        var js = grunt.file.expandFiles(task.file.src);
+        var js = grunt.file.expandFiles(task.fileSrc);
         grunt.util.async.forEach(js, function (fn, callback) {
             snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
