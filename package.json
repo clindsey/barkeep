@@ -1,7 +1,7 @@
 {
   "name": "grunt-barkeep",
   "description": "grunt tasks for deploying to s3, sending data to ducksboard, and snockets.",
-  "version": "0.4.2rc5",
+  "version": "0.4.3",
   "homepage": "https://github.com/flite/barkeep",
   "author": {
     "name": "Flite, Inc."
@@ -29,7 +29,7 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "grunt": "0.4.x",
+    "grunt": "~0.4.0",
     "snockets": "~1.3.7",
     "awssum": "0.3.3",
     "grunt-s3": "git://github.com/smithclay/grunt-s3.git#e57a1a252dd4d22a996f26c143c6578ea8b404b9",
