@@ -5,13 +5,13 @@
  * Copyright (c) 2012 Flite, Inc.
  * Licensed under the MIT license.
  */
- 
+
 module.exports = function(grunt) {
     "use strict";
     var peking = require('peking');
     var fs = require('fs');
     var gzip = require('gzip-js');
-    
+
     // ## helper filesize
     // Get the combined filesize (including gzipped) of a collection of files.
     exports.filesize = function (files, cb) {
@@ -49,14 +49,14 @@ module.exports = function(grunt) {
             if (err) {
                 cb(err, null);
             }
-            
+
             // Get compressed size of all of the files.
             var compressed = gzip.zip(totalData, {level: 6});
-            
+
             cb(null, totalSize, compressed.length);
         });
     };
-    
+
     // # multitask ducksboard
     // Send file size data of a collection of files to ducksboard
     grunt.registerMultiTask('ducksboard', 'Send file size data to ducksboard.', function() {
@@ -67,13 +67,13 @@ module.exports = function(grunt) {
         if (!endpoint) {
             grunt.warn('Every target must specify an endpoint.');
         }
-        
-        var js = grunt.file.expandFiles(this.file.src);
+
+        var js = grunt.file.expand(this.filesSrc);
         exports.filesize(js, function(err, totalSize, compressedSize) {
             if (err) {
                 grunt.warn(err);
             }
-            grunt.log.writeln('[' + task.target + '] total size (bytes): ' + totalSize + 
+            grunt.log.writeln('[' + task.target + '] total size (bytes): ' + totalSize +
                 ' compressed (bytes): ' + compressedSize);
             peking.pushValue({value: gzip ? compressedSize : totalSize,
                 endpoint: endpoint, api_key: grunt.config('meta.ducksboard_api_key')}, function (err) {
