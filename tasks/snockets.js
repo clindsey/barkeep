@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         
         // Use snockets to get the dependency chain files.
         var js = task.filesSrc;
-        grunt.util.async.forEach(js, function (fn, callback) {
+        grunt.util.async.forEachSeries(js, function (fn, callback) {
             snock.getConcatenation(fn, {minify: false}, function (err, js) {
                 if (err) {
                     grunt.fail.fatal(err);
